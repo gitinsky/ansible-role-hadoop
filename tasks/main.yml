@@ -1,0 +1,39 @@
+---
+- name: download Hadoop
+  command: bash -c "cd /root && wget http://apache-mirror.rbc.ru/pub/apache/hadoop/common/hadoop-2.5.2/hadoop-2.5.2.tar.gz" creates=/root/hadoop-2.5.2.tar.gz
+
+- name: unpack Hadoop
+  command: bash -c "cd /opt && tar xzf /root/hadoop-2.5.2.tar.gz" creates=/opt/hadoop-2.5.2
+
+- name: create /opt/hadoop
+  file: state=link src=/opt/hadoop-2.5.2 dest=/opt/hadoop
+
+- name: add Hadoop user
+  user: name=hadoop shell=/usr/sbin/nologin state=present
+
+- name: make /var/hadoop
+  file: path=/var/hadoop state=directory owner=hadoop group=hadoop mode=0700
+
+- name: make /opt/hadoop/conf
+  file: path=/opt/hadoop/conf state=directory owner=root group=root mode=0755
+
+- name: put /opt/hadoop/conf/core-site.xml
+  template: src=hadoop/core-site.xml dest=/opt/hadoop/conf/core-site.xml owner=root group=root mode=0644
+
+- name: put /opt/hadoop/conf/hadoop-env.sh
+  template: src=hadoop/hadoop-env.sh dest=/opt/hadoop/conf/hadoop-env.sh owner=root group=root mode=0644
+
+- name: install augeas-lenses
+  apt: name=augeas-lenses state=present
+  sudo: yes
+  sudo_user: root
+
+- name: install augeas-tools
+  apt: name=augeas-tools state=present
+  sudo: yes
+  sudo_user: root
+
+- name: install python-augeas
+  apt: name=python-augeas state=present
+  sudo: yes
+  sudo_user: root
