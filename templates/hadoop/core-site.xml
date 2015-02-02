@@ -13,6 +13,11 @@
     <name>hadoop.tmp.dir</name>
     <value>/var/hadoop</value>
   </property>
+
+  <property>
+    <name>dfs.hosts.exclude</name>
+    <value>/var/hadoop/exclusion-list</value>
+  </property>
   
   <!--
            local client reads to a Datanodes files directly
