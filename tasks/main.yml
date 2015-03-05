@@ -24,6 +24,9 @@
 - name: put /opt/hadoop/conf/core-site.xml
   template: src=hadoop/core-site.xml dest=/opt/hadoop/conf/core-site.xml owner=root group=root mode=0644
 
+- name: put /opt/hadoop/conf/hdfs-site.xml
+  template: src=hadoop/hdfs-site.xml dest=/opt/hadoop/conf/hdfs-site.xml owner=root group=root mode=0644
+
 - name: put /opt/hadoop/conf/hadoop-env.sh
   template: src=hadoop/hadoop-env.sh dest=/opt/hadoop/conf/hadoop-env.sh owner=root group=root mode=0644
 
