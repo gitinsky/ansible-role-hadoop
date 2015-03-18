@@ -1,12 +1,12 @@
 ---
 - name: download Hadoop
-  command: bash -c "cd /root && wget http://apache-mirror.rbc.ru/pub/apache/hadoop/common/hadoop-2.5.2/hadoop-2.5.2.tar.gz" creates=/root/hadoop-2.5.2.tar.gz
+  command: bash -c "cd /root && wget http://apache-mirror.rbc.ru/pub/apache/hadoop/common/hadoop-{{ hadoop_version }}/hadoop-{{ hadoop_version }}.tar.gz" creates=/root/hadoop-{{ hadoop_version }}.tar.gz
 
 - name: unpack Hadoop
-  command: bash -c "cd /opt && tar xzf /root/hadoop-2.5.2.tar.gz" creates=/opt/hadoop-2.5.2
+  command: bash -c "cd /opt && tar xzf /root/hadoop-{{ hadoop_version }}.tar.gz" creates=/opt/hadoop-{{ hadoop_version }}
 
 - name: create /opt/hadoop
-  file: state=link src=/opt/hadoop-2.5.2 dest=/opt/hadoop
+  file: state=link src=/opt/hadoop-{{ hadoop_version }} dest=/opt/hadoop
 
 - name: add Hadoop user
   user: name=hadoop shell=/usr/sbin/nologin state=present
@@ -29,6 +29,9 @@
 
 - name: put /opt/hadoop/conf/hadoop-env.sh
   template: src=hadoop/hadoop-env.sh dest=/opt/hadoop/conf/hadoop-env.sh owner=root group=root mode=0644
+
+#- name: put /opt/hadoop/conf/hadoop-metrics.properties
+#  template: src=hadoop/hadoop-metrics.properties dest=/opt/hadoop/conf/hadoop-metrics.properties owner=root group=root mode=0644
 
 - name: install augeas-lenses
   apt: name=augeas-lenses state=present
