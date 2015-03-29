@@ -33,6 +33,15 @@
 #- name: put /opt/hadoop/conf/hadoop-metrics.properties
 #  template: src=hadoop/hadoop-metrics.properties dest=/opt/hadoop/conf/hadoop-metrics.properties owner=root group=root mode=0644
 
+- name: create /opt/hadoop/lib/native/Linux-amd64-64
+  file: state=directory path=/opt/hadoop/lib/native/Linux-amd64-64
+
+- name: make a link to libhadoop.so
+  file: state=link src=/opt/hadoop/lib/native/libhadoop.so dest=/opt/hadoop/lib/native/Linux-amd64-64/libhadoop.so
+
+- name: make a link to libhdfs.so
+  file: state=link src=/opt/hadoop/lib/native/libhdfs.so dest=/opt/hadoop/lib/native/Linux-amd64-64/libhdfs.so
+
 - name: install augeas-lenses
   apt: name=augeas-lenses state=present
   sudo: yes
