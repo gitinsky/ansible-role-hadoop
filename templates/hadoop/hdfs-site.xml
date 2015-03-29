@@ -54,4 +54,27 @@
     <value>/var/hadoop/jnedits</value>
   </property>
 
+  <property>
+    <name>dfs.ha.automatic-failover.enabled</name>
+    <value>true</value>
+  </property>
+
+  <!-- Enable durable sync -->
+  <property>
+    <name>dfs.support.append</name>
+    <value>true</value>
+  </property>
+
+  <property>
+    <name>dfs.domain.socket.path</name>
+    <value>/var/hadoop/dn_socket</value>
+  </property>
+  <!--
+              local client reads to a Datanodes files directly
+  -->
+  <property>
+    <!-- @see https://issues.apache.org/jira/browse/HDFS-2246 -->
+    <name>dfs.client.read.shortcircuit</name>
+    <value>true</value>
+  </property>
 </configuration>
