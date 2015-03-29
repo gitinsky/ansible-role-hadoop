@@ -6,7 +6,7 @@
 <configuration>
   <property>
     <name>fs.defaultFS</name>
-    <value>hdfs://{{ default_fs_ip }}:8020/</value>
+    <value>hdfs://{{ hdfs_nameservice_id }}</value>
   </property>
 
   <property>
@@ -32,5 +32,10 @@
   <property>
     <name>dfs.support.append</name>
     <value>true</value>
+  </property>
+
+  <property>
+    <name>ha.zookeeper.quorum</name>
+    <value>{{ zookeeper_quorum }}</value>
   </property>
 </configuration>
