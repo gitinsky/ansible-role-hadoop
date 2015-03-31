@@ -1,4 +1,7 @@
 ---
+- name: install wget
+  apt: name=wget state=present
+
 - name: download Hadoop
   command: bash -c "cd /root && wget http://apache-mirror.rbc.ru/pub/apache/hadoop/common/hadoop-{{ hadoop_version }}/hadoop-{{ hadoop_version }}.tar.gz" creates=/root/hadoop-{{ hadoop_version }}.tar.gz
 
