@@ -6,7 +6,7 @@
 # remote nodes.
 
 # The java implementation to use.
-export JAVA_HOME=/usr/java/jdk1.8.0_11
+export JAVA_HOME=/usr/java/jdk1.8.0_40
 
 # The jsvc implementation to use. Jsvc is required to run secure datanodes.
 #export JSVC_HOME=${JSVC_HOME}
