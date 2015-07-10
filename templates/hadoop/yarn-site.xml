@@ -1,0 +1,133 @@
+<?xml version="1.0"?>
+<configuration>
+
+<!-- Site specific YARN configuration properties -->
+
+<property>
+  <name>yarn.scheduler.capacity.root.queues</name>
+  <value>default</value>
+  <description>The queues at the this level (root is the root queue).</description>
+</property>
+
+<property>
+  <name>yarn.scheduler.capacity.root.default.capacity</name>
+  <value>100</value>
+  <description>Capacity of the queue (sum of all capacities shoud be 100).</description>
+</property>
+
+<property>
+  <name>yarn.resourcemanager.resource-tracker.address</name>
+  <value>{{ yarn_resourcemanager }}:{{ yarn_resourcemanager_resourcetracker_port }}</value>
+  <description>Tracker address.</description>
+</property>
+
+<property>
+  <name>yarn.log-aggregation-enable</name>
+  <value>true</value>
+  <description>Whether to enable log aggregation.</description>
+</property>
+
+<property>
+  <name>yarn.log-aggregation.retain-seconds</name>
+  <value>604800</value>
+  <description>How long to keep aggregation logs before deleting them.</description>
+</property>
+
+<property>
+  <name>yarn.nodemanager.remote-app-log-dir</name>
+  <value>/var/log/hadoop-yarn/apps</value>
+  <description>The directory where logs are aggregated.</description>
+</property>
+
+<property>
+  <name>yarn.app.mapreduce.am.staging-dir</name>
+  <value>/user</value>
+  <description>The staging dir used while submitting jobs.</description>
+</property>
+
+<property>
+  <name>yarn.resourcemanager.address</name>
+  <value>{{ yarn_resourcemanager }}:{{ yarn_resourcemanager_port }}</value>
+  <description>ResourceManager host:port for clients to submit jobs.</description>
+</property>
+
+<property>
+  <name>yarn.resourcemanager.scheduler.address</name>
+  <value>{{ yarn_resourcemanager }}:{{ yarn_resourcemanager_scheduler_port }}</value>
+  <description>ResourceManager Scheduler RPC (for ApplicationMasters).</description>
+</property>
+
+<property>
+  <name>yarn.resourcemanager.hostname</name>
+  <value>{{ yarn_resourcemanager }}</value>
+  <description>ResourceManager hostname.</description>
+</property>
+
+<property>
+  <name>yarn.resourcemanager.webapp.address</name>
+  <value>{{ yarn_resourcemanager }}:{{ yarn_resourcemanager_webapp_port }}</value>
+</property>
+
+<property>
+  <name>yarn.resourcemanager.admin.address</name>
+  <value>{{ yarn_resourcemanager }}:{{ yarn_resourcemanager_admin_port }}</value>
+</property>
+
+<property>
+  <name>yarn.nodemanager.localizer.address</name>
+  <value>${yarn.nodemanager.hostname}:{{ yarn_nodemanager_localizer_port  }}</value>
+</property>
+
+<property>
+  <name>yarn.nodemanager.webapp.address</name>
+  <value>${yarn.nodemanager.hostname}:{{ yarn_nodemanager_webapp_port  }}</value>
+</property>
+
+<property>
+  <name>yarn.nodemanager.address</name>
+  <value>${yarn.nodemanager.hostname}:{{ yarn_nodemanager_port }}</value>
+</property>
+
+<property>
+  <name>yarn.nodemanager.aux-services</name>
+  <value>mapreduce_shuffle</value>
+  <description>Shuffle service that needs to be set for Map Reduce applications.</description>
+</property>
+
+<property>
+  <name>yarn.nodemanager.resource.memory-mb</name>
+  <value>50000</value>
+  <description>...</description>
+</property>
+
+<property>
+  <name>yarn.scheduler.minimum-allocation-mb</name>
+  <value>2500</value>
+  <description>...</description>
+</property>
+
+<property>
+  <name>mapreduce.map.memory.mb</name>
+  <value>4096</value>
+  <description>...</description>
+</property>
+
+<property>
+  <name>mapreduce.reduce.memory.mb</name>
+  <value>8192</value>
+  <description>...</description>
+</property>
+
+<property>
+  <name>mapreduce.map.java.opts</name>
+  <value>-Xmx3000m</value>
+  <description>...</description>
+</property>
+
+<property>
+  <name>mapreduce.reduce.java.opts</name>
+  <value>-Xmx6000m</value>
+  <description>...</description>
+</property>
+
+</configuration>

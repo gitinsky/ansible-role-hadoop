@@ -8,54 +8,45 @@
 - name: unpack Hadoop
   command: bash -c "cd /opt && tar xzf /root/hadoop-{{ hadoop_version }}.tar.gz" creates=/opt/hadoop-{{ hadoop_version }}
 
-- name: create /opt/hadoop
-  file: state=link src=/opt/hadoop-{{ hadoop_version }} dest=/opt/hadoop
+- name: create {{ hadoop_distr_prefix }}
+  shell: cp -r /opt/hadoop-{{ hadoop_version }} {{ hadoop_distr_prefix }} creates={{ hadoop_distr_prefix }}
 
 - name: add Hadoop user
-  user: name=hadoop shell=/usr/sbin/nologin state=present
+  user: name={{ hadoop_user }} shell=/usr/sbin/nologin state=present
 
-- name: make /var/hadoop
-  file: path=/var/hadoop state=directory owner=hadoop group=hadoop mode=0700
+- name: make {{ hadoop_var_prefix }}
+  file: path={{ hadoop_var_prefix }} state=directory owner={{ hadoop_user }} group={{ hadoop_user }} mode=0700
 
 - name: put exclusion list
-  template: src=hadoop/exclusion-list dest=/var/hadoop/exclusion-list
+  template: src=hadoop/exclusion-list dest={{ hadoop_var_prefix }}/exclusion-list
   notify: refresh nodes
 
-- name: make /opt/hadoop/conf
-  file: path=/opt/hadoop/conf state=directory owner=root group=root mode=0755
+- name: make {{ hadoop_distr_prefix }}/conf
+  file: path={{ hadoop_distr_prefix }}/conf state=directory owner=root group=root mode=0755
 
-- name: put /opt/hadoop/conf/core-site.xml
-  template: src=hadoop/core-site.xml dest=/opt/hadoop/conf/core-site.xml owner=root group=root mode=0644
+- name: put {{ hadoop_distr_prefix }}/conf/core-site.xml
+  template: src=hadoop/core-site.xml dest={{ hadoop_distr_prefix }}/conf/core-site.xml owner=root group=root mode=0644
 
-- name: put /opt/hadoop/conf/hdfs-site.xml
-  template: src=hadoop/hdfs-site.xml dest=/opt/hadoop/conf/hdfs-site.xml owner=root group=root mode=0644
+- name: put {{ hadoop_distr_prefix }}/conf/hdfs-site.xml
+  template: src=hadoop/hdfs-site.xml dest={{ hadoop_distr_prefix }}/conf/hdfs-site.xml owner=root group=root mode=0644
 
-- name: put /opt/hadoop/conf/hadoop-env.sh
-  template: src=hadoop/hadoop-env.sh dest=/opt/hadoop/conf/hadoop-env.sh owner=root group=root mode=0644
+- name: put {{ hadoop_distr_prefix }}/conf/hadoop-env.sh
+  template: src=hadoop/hadoop-env.sh dest={{ hadoop_distr_prefix }}/conf/hadoop-env.sh owner=root group=root mode=0644
 
-#- name: put /opt/hadoop/conf/hadoop-metrics.properties
-#  template: src=hadoop/hadoop-metrics.properties dest=/opt/hadoop/conf/hadoop-metrics.properties owner=root group=root mode=0644
+- name: put {{ hadoop_distr_prefix }}/conf/yarn-env.sh
+  template: src=hadoop/yarn-env.sh dest={{ hadoop_distr_prefix }}/conf/yarn-env.sh owner=root group=root mode=0644
 
-- name: create /opt/hadoop/lib/native/Linux-amd64-64
-  file: state=directory path=/opt/hadoop/lib/native/Linux-amd64-64
+- name: put {{ hadoop_distr_prefix }}/conf/yarn-site.xml
+  template: src=hadoop/yarn-site.xml dest={{ hadoop_distr_prefix }}/conf/yarn-site.xml owner=root group=root mode=0644
+
+- name: put {{ hadoop_distr_prefix }}/conf/mapred-site.xml
+  template: src=hadoop/mapred-site.xml dest={{ hadoop_distr_prefix }}/conf/mapred-site.xml owner=root group=root mode=0644
+
+- name: create {{ hadoop_distr_prefix }}/lib/native/Linux-amd64-64
+  file: state=directory path={{ hadoop_distr_prefix }}/lib/native/Linux-amd64-64
 
 - name: make a link to libhadoop.so
-  file: state=link src=/opt/hadoop/lib/native/libhadoop.so dest=/opt/hadoop/lib/native/Linux-amd64-64/libhadoop.so
+  file: state=link src={{ hadoop_distr_prefix }}/lib/native/libhadoop.so dest={{ hadoop_distr_prefix }}/lib/native/Linux-amd64-64/libhadoop.so
 
 - name: make a link to libhdfs.so
-  file: state=link src=/opt/hadoop/lib/native/libhdfs.so dest=/opt/hadoop/lib/native/Linux-amd64-64/libhdfs.so
-
-- name: install augeas-lenses
-  apt: name=augeas-lenses state=present
-  sudo: yes
-  sudo_user: root
-
-- name: install augeas-tools
-  apt: name=augeas-tools state=present
-  sudo: yes
-  sudo_user: root
-
-- name: install python-augeas
-  apt: name=python-augeas state=present
-  sudo: yes
-  sudo_user: root
+  file: state=link src={{ hadoop_distr_prefix }}/lib/native/libhdfs.so dest={{ hadoop_distr_prefix }}/lib/native/Linux-amd64-64/libhdfs.so

@@ -16,27 +16,42 @@
 
   <property>
     <name>dfs.namenode.rpc-address.{{ hdfs_nameservice_id }}.nn1</name>
-    <value>{{ namenode_1 }}:8020</value>
+    <value>{{ namenode_1 }}:{{ namenode_rpc_port }}</value>
   </property>
 
   <property>
     <name>dfs.namenode.rpc-address.{{ hdfs_nameservice_id }}.nn2</name>
-    <value>{{ namenode_2 }}:8020</value>
+    <value>{{ namenode_2 }}:{{ namenode_rpc_port }}</value>
   </property>
 
   <property>
     <name>dfs.namenode.http-address.{{ hdfs_nameservice_id }}.nn1</name>
-    <value>{{ namenode_1 }}:50070</value>
+    <value>{{ namenode_1 }}:{{ namenode_http_port }}</value>
   </property>
 
   <property>
     <name>dfs.namenode.http-address.{{ hdfs_nameservice_id }}.nn2</name>
-    <value>{{ namenode_2 }}:50070</value>
+    <value>{{ namenode_2 }}:{{ namenode_http_port }}</value>
+  </property>
+
+  <property>
+    <name>dfs.datanode.http.address</name>
+    <value>0.0.0.0:{{ datanode_http_port }}</value>
+  </property>
+
+  <property>
+    <name>dfs.datanode.address</name>
+    <value>0.0.0.0:{{ datanode_port }}</value>
+  </property>
+
+  <property>
+    <name>dfs.datanode.ipc.address</name>
+    <value>0.0.0.0:{{ datanode_ipc_port }}</value>
   </property>
 
   <property>
     <name>dfs.namenode.shared.edits.dir</name>
-    <value>qjournal://{{ journalnode_1 }}:8485;{{ journalnode_2 }}:8485;{{ journalnode_3 }}:8485/{{ hdfs_nameservice_id }}</value>
+    <value>qjournal://{{ journalnode_1 }}:{{ journalnode_port }};{{ journalnode_2 }}:{{ journalnode_port }};{{ journalnode_3 }}:{{ journalnode_port }}/{{ hdfs_nameservice_id }}</value>
   </property>
 
   <property>
@@ -51,8 +66,15 @@
 
   <property>
     <name>dfs.journalnode.edits.dir</name>
-    <value>/var/hadoop/jnedits</value>
+    <value>{{ hadoop_var_prefix }}/jnedits</value>
   </property>
+
+{% if (dfs_ha_namenode_id|default('')) != ''  %}
+  <property>
+    <name>dfs.ha.namenode.id</name>
+    <value>{{ dfs_ha_namenode_id }}</value>
+  </property>
+{% endif %}
 
   <property>
     <name>dfs.ha.automatic-failover.enabled</name>
@@ -67,7 +89,7 @@
 
   <property>
     <name>dfs.domain.socket.path</name>
-    <value>/var/hadoop/dn_socket</value>
+    <value>{{ hadoop_var_prefix }}/dn_socket</value>
   </property>
   <!--
               local client reads to a Datanodes files directly
@@ -76,5 +98,26 @@
     <!-- @see https://issues.apache.org/jira/browse/HDFS-2246 -->
     <name>dfs.client.read.shortcircuit</name>
     <value>true</value>
+  </property>
+
+  <!-- Enable durable sync -->
+  <property>
+    <name>dfs.support.append</name>
+    <value>true</value>
+  </property>
+
+  <property>
+    <name>ha.zookeeper.quorum</name>
+    <value>{{ zookeeper_quorum }}</value>
+  </property>
+
+  <property>
+    <name>dfs.journalnode.rpc-address</name>
+    <value>0.0.0.0:{{ journalnode_port }}</value>
+  </property>
+
+  <property>
+    <name>dfs.journalnode.http-address</name>
+    <value>0.0.0.0:{{ journalnode_http_port }}</value>
   </property>
 </configuration>

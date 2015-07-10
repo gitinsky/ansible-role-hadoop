@@ -11,12 +11,12 @@
 
   <property>
     <name>hadoop.tmp.dir</name>
-    <value>/var/hadoop</value>
+    <value>{{ hadoop_var_prefix }}</value>
   </property>
 
   <property>
     <name>dfs.hosts.exclude</name>
-    <value>/var/hadoop/exclusion-list</value>
+    <value>{{ hadoop_var_prefix }}/exclusion-list</value>
   </property>
   
   <!--
@@ -26,16 +26,5 @@
   <property>
        <name>dfs.block.local-path-access.user</name>
        <value>hadoop</value>
-  </property>
-  
-  <!-- Enable durable sync -->
-  <property>
-    <name>dfs.support.append</name>
-    <value>true</value>
-  </property>
-
-  <property>
-    <name>ha.zookeeper.quorum</name>
-    <value>{{ zookeeper_quorum }}</value>
   </property>
 </configuration>
