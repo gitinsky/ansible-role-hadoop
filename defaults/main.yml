@@ -1,3 +1,4 @@
 ---
 hadoop_version: 2.6.0
 hadoop_distr_prefix: /opt/hadoop
+hadoop_user_shell: /usr/sbin/nologin
