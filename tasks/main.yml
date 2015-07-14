@@ -12,7 +12,7 @@
   shell: cp -r /opt/hadoop-{{ hadoop_version }} {{ hadoop_distr_prefix }} creates={{ hadoop_distr_prefix }}
 
 - name: add Hadoop user
-  user: name={{ hadoop_user }} shell=/usr/sbin/nologin state=present
+  user: name={{ hadoop_user }} shell={{ hadoop_user_shell }} state=present
 
 - name: make {{ hadoop_var_prefix }}
   file: path={{ hadoop_var_prefix }} state=directory owner={{ hadoop_user }} group={{ hadoop_user }} mode=0700
