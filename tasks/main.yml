@@ -35,12 +35,15 @@
 
 - name: put {{ hadoop_distr_prefix }}/conf/yarn-env.sh
   template: src=hadoop/yarn-env.sh dest={{ hadoop_distr_prefix }}/conf/yarn-env.sh owner=root group=root mode=0644
+  when: (disable_yarn|default(False) == False)
 
 - name: put {{ hadoop_distr_prefix }}/conf/yarn-site.xml
   template: src=hadoop/yarn-site.xml dest={{ hadoop_distr_prefix }}/conf/yarn-site.xml owner=root group=root mode=0644
+  when: (disable_yarn|default(False) == False)
 
 - name: put {{ hadoop_distr_prefix }}/conf/mapred-site.xml
   template: src=hadoop/mapred-site.xml dest={{ hadoop_distr_prefix }}/conf/mapred-site.xml owner=root group=root mode=0644
+  when: (disable_yarn|default(False) == False)
 
 - name: create {{ hadoop_distr_prefix }}/lib/native/Linux-amd64-64
   file: state=directory path={{ hadoop_distr_prefix }}/lib/native/Linux-amd64-64
