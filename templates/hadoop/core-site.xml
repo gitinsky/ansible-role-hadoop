@@ -27,4 +27,14 @@
        <name>dfs.block.local-path-access.user</name>
        <value>hadoop</value>
   </property>
+
+  <property>
+       <name>hadoop.proxyuser.{{ hadoop_user }}.hosts</name>
+       <value>*</value>
+  </property>
+
+  <property>
+       <name>hadoop.proxyuser.{{ hadoop_user }}.groups</name>
+       <value>*</value>
+  </property>
 </configuration>
