@@ -18,31 +18,31 @@
   file: path={{ hadoop_var_prefix }} state=directory owner={{ hadoop_user }} group={{ hadoop_user }} mode=0700
 
 - name: put exclusion list
-  template: src=hadoop/exclusion-list dest={{ hadoop_var_prefix }}/exclusion-list
+  template: src=hadoop/exclusion-list dest={{ hadoop_var_prefix }}/exclusion-list backup=yes
   notify: refresh nodes
 
 - name: make {{ hadoop_distr_prefix }}/conf
   file: path={{ hadoop_distr_prefix }}/conf state=directory owner=root group=root mode=0755
 
 - name: put {{ hadoop_distr_prefix }}/conf/core-site.xml
-  template: src=hadoop/core-site.xml dest={{ hadoop_distr_prefix }}/conf/core-site.xml owner=root group=root mode=0644
+  template: src=hadoop/core-site.xml dest={{ hadoop_distr_prefix }}/conf/core-site.xml owner=root group=root mode=0644 backup=yes
 
 - name: put {{ hadoop_distr_prefix }}/conf/hdfs-site.xml
-  template: src=hadoop/hdfs-site.xml dest={{ hadoop_distr_prefix }}/conf/hdfs-site.xml owner=root group=root mode=0644
+  template: src=hadoop/hdfs-site.xml dest={{ hadoop_distr_prefix }}/conf/hdfs-site.xml owner=root group=root mode=0644 backup=yes
 
 - name: put {{ hadoop_distr_prefix }}/conf/hadoop-env.sh
-  template: src=hadoop/hadoop-env.sh dest={{ hadoop_distr_prefix }}/conf/hadoop-env.sh owner=root group=root mode=0644
+  template: src=hadoop/hadoop-env.sh dest={{ hadoop_distr_prefix }}/conf/hadoop-env.sh owner=root group=root mode=0644 backup=yes
 
 - name: put {{ hadoop_distr_prefix }}/conf/yarn-env.sh
-  template: src=hadoop/yarn-env.sh dest={{ hadoop_distr_prefix }}/conf/yarn-env.sh owner=root group=root mode=0644
+  template: src=hadoop/yarn-env.sh dest={{ hadoop_distr_prefix }}/conf/yarn-env.sh owner=root group=root mode=0644 backup=yes
   when: (disable_yarn|default(False) == False)
 
 - name: put {{ hadoop_distr_prefix }}/conf/yarn-site.xml
-  template: src=hadoop/yarn-site.xml dest={{ hadoop_distr_prefix }}/conf/yarn-site.xml owner=root group=root mode=0644
+  template: src=hadoop/yarn-site.xml dest={{ hadoop_distr_prefix }}/conf/yarn-site.xml owner=root group=root mode=0644 backup=yes
   when: (disable_yarn|default(False) == False)
 
 - name: put {{ hadoop_distr_prefix }}/conf/mapred-site.xml
-  template: src=hadoop/mapred-site.xml dest={{ hadoop_distr_prefix }}/conf/mapred-site.xml owner=root group=root mode=0644
+  template: src=hadoop/mapred-site.xml dest={{ hadoop_distr_prefix }}/conf/mapred-site.xml owner=root group=root mode=0644 backup=yes
   when: (disable_yarn|default(False) == False)
 
 - name: create {{ hadoop_distr_prefix }}/lib/native/Linux-amd64-64
