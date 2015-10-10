@@ -48,6 +48,9 @@
 - name: create {{ hadoop_distr_prefix }}/lib/native/Linux-amd64-64
   file: state=directory path={{ hadoop_distr_prefix }}/lib/native/Linux-amd64-64
 
+- name: make {{ hadoop_distr_prefix }}/logs
+  file: path={{ hadoop_distr_prefix }}/logs state=directory owner={{ hadoop_user }} group={{ hadoop_user }} mode=0755
+
 - name: make a link to libhadoop.so
   file: state=link src={{ hadoop_distr_prefix }}/lib/native/libhadoop.so dest={{ hadoop_distr_prefix }}/lib/native/Linux-amd64-64/libhadoop.so
 
