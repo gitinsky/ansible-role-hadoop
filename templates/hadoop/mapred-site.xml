@@ -78,7 +78,7 @@
 
 <property>
   <name>mapreduce.jobhistory.admin.address</name>
-  <value>0.0.0.0:{{ jobhistory_admin_port }}</value>
+  <value>{{ jobhistory_host }}:{{ jobhistory_admin_port }}</value>
 </property>
 
 </configuration>
