@@ -6,7 +6,7 @@
 # remote nodes.
 
 # The java implementation to use.
-export JAVA_HOME=/usr/java/jdk1.8.0_40
+export JAVA_HOME=/usr/lib/jvm/java-8-oracle
 
 # The jsvc implementation to use. Jsvc is required to run secure datanodes.
 #export JSVC_HOME=${JSVC_HOME}
@@ -23,7 +23,7 @@ export JAVA_HOME=/usr/java/jdk1.8.0_40
 # done
 
 # The maximum amount of heap to use, in MB. Default is 1000.
-#export HADOOP_HEAPSIZE=
+export HADOOP_HEAPSIZE={{ hadoop_heapsize }}
 #export HADOOP_NAMENODE_INIT_HEAPSIZE=""
 
 # Extra Java runtime options.  Empty by default.
