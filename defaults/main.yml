@@ -1,4 +1,5 @@
 ---
+hadoop_heapsize: 2000
 hadoop_version: 2.7.1
 hadoop_distr_prefix: /opt/hadoop
 hadoop_user_shell: /usr/sbin/nologin
@@ -6,3 +7,8 @@ hadoop_user: hadoop
 hadoop_var_prefix: /var/hadoop
 journalnode_http_port: 8480
 journalnode_port: 8485
+namenode_rpc_port: 8020
+namenode_http_port: 50070
+datanode_http_port: 50075
+datanode_port: 50010
+datanode_ipc_port: 50020
