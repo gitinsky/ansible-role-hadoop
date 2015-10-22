@@ -25,7 +25,7 @@
   -->
   <property>
        <name>dfs.block.local-path-access.user</name>
-       <value>hadoop</value>
+       <value>{{ hadoop_user }}</value>
   </property>
 
   <property>
