@@ -12,3 +12,16 @@ namenode_http_port: 50070
 datanode_http_port: 50075
 datanode_port: 50010
 datanode_ipc_port: 50020
+exclusion_list: []
+yarn_resourcemanager_resourcetracker_port: 8031
+yarn_resourcemanager_port: 8032
+yarn_resourcemanager_scheduler_port: 8030
+yarn_resourcemanager_webapp_port: 8088
+yarn_resourcemanager_admin_port: 8033
+yarn_nodemanager_localizer_port: 8040
+yarn_nodemanager_webapp_port: 8042
+yarn_nodemanager_port: 0
+jobhistory_port: 10020
+jobhistory_webapp_port: 19888
+yarn_shuffle_port: 13562
+jobhistory_admin_port: 10033
