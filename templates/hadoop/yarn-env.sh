@@ -2,7 +2,7 @@
 export HADOOP_YARN_USER={{ hadoop_user }}
 
 #export JAVA_HOME=/usr/java/latest
-export JAVA_HOME=/usr/java/jdk1.8.0_40
+export JAVA_HOME=/usr/lib/jvm/java-8-oracle
   
 YARN_HEAPSIZE=8000
 export YARN_HEAPSIZE
