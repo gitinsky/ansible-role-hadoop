@@ -96,25 +96,25 @@
 
 <property>
   <name>yarn.nodemanager.resource.memory-mb</name>
-  <value>50000</value>
+  <value>{{ yarn_nodemanager_total_mem }}</value>
   <description>...</description>
 </property>
 
 <property>
   <name>yarn.scheduler.minimum-allocation-mb</name>
-  <value>2500</value>
+  <value>{{ yarn_scheduler_min_mem }}</value>
   <description>...</description>
 </property>
 
 <property>
   <name>mapreduce.map.memory.mb</name>
-  <value>4096</value>
+  <value>{{ yarn_mapreduce_map_mem }}</value>
   <description>...</description>
 </property>
 
 <property>
   <name>mapreduce.reduce.memory.mb</name>
-  <value>8192</value>
+  <value>{{ yarn_mapreduce_reduce_mem }}</value>
   <description>...</description>
 </property>
 
@@ -160,6 +160,16 @@
 <property>
   <name>yarn.timeline-service.http-authentication.simple.anonymous.allowed</name>
   <value>true</value>
+</property>
+
+<property>
+  <name>yarn.nodemanager.resource.cpu-vcores</name>
+  <value>{{ yarn_nodemanager_vcores }}</value>
+</property>
+
+<property>
+  <name>yarn.nodemanager.vmem-check-enabled</name>
+  <value>false</value>
 </property>
 
 </configuration>
