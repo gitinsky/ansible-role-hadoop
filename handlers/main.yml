@@ -1,3 +1,4 @@
 ---
 - name: refresh nodes
-  shell: sudo -u {{ hadoop_user }} {{ hadoop_distr_prefix }}/bin/hadoop dfsadmin -refreshNodes
+  shell: sudo -u {{ hadoop_user }} {{ hadoop_distr_prefix }}/bin/hdfs dfsadmin -refreshNodes
+  ignore_errors: True
