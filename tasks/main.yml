@@ -1,12 +1,12 @@
 ---
-- name: install wget
-  apt: name=wget state=present
-
 - name: download Hadoop
   get_url: url="http://apache-mirror.rbc.ru/pub/apache/hadoop/common/hadoop-{{ hadoop_version }}/hadoop-{{ hadoop_version }}.tar.gz" dest=/root/hadoop-{{ hadoop_version }}.tar.gz
 
+- name: install tar
+  package: name=tar state=present
+
 - name: unpack Hadoop
-  command: bash -c "cd /opt && tar xzf /root/hadoop-{{ hadoop_version }}.tar.gz" creates=/opt/hadoop-{{ hadoop_version }}
+  unarchive: copy=no src="/root/hadoop-{{ hadoop_version }}.tar.gz" dest=/opt
 
 - name: create {{ hadoop_distr_prefix }}
   shell: cp -r /opt/hadoop-{{ hadoop_version }} {{ hadoop_distr_prefix }} creates={{ hadoop_distr_prefix }}
