@@ -87,10 +87,12 @@
     <value>true</value>
   </property>
 
+{% if ansible_os_family == 'Debian' %}
   <property>
     <name>dfs.domain.socket.path</name>
     <value>{{ hadoop_var_prefix }}/dn_socket</value>
   </property>
+{% endif %}
   <!--
               local client reads to a Datanodes files directly
   -->
