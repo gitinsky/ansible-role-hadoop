@@ -87,6 +87,7 @@
     <value>true</value>
   </property>
 
+{% if ansible_os_family == 'Debian' %}
   <property>
     <name>dfs.domain.socket.path</name>
     <value>{{ hadoop_var_prefix }}/dn_socket</value>
@@ -99,6 +100,7 @@
     <name>dfs.client.read.shortcircuit</name>
     <value>true</value>
   </property>
+{% endif %}
 
   <!-- Enable durable sync -->
   <property>
