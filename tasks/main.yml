@@ -33,6 +33,9 @@
 - name: put {{ hadoop_distr_prefix }}/conf/hadoop-env.sh
   template: src=hadoop/hadoop-env.sh dest={{ hadoop_distr_prefix }}/conf/hadoop-env.sh owner=root group=root mode=0644 backup=yes
 
+- name: put {{ hadoop_distr_prefix }}/conf/hadoop-metrics.properties
+  template: src=hadoop/hadoop-metrics.properties dest={{ hadoop_distr_prefix }}/conf/hadoop-metrics.properties owner=root group=root mode=0644 backup=yes
+
 - name: put {{ hadoop_distr_prefix }}/conf/yarn-env.sh
   template: src=hadoop/yarn-env.sh dest={{ hadoop_distr_prefix }}/conf/yarn-env.sh owner=root group=root mode=0644 backup=yes
   when: (disable_yarn|default(False) == False)
