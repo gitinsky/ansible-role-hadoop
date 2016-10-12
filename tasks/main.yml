@@ -15,7 +15,7 @@
   user: name={{ hadoop_user }} shell={{ hadoop_user_shell }} state=present
 
 - name: make {{ hadoop_var_prefix }}
-  file: path={{ hadoop_var_prefix }} state=directory owner={{ hadoop_user }} group={{ hadoop_user }} mode=0700
+  file: path={{ hadoop_var_prefix }} state=directory owner={{ hadoop_user }} group={{ hadoop_user }} mode=0755
 
 - name: put exclusion list
   template: src=hadoop/exclusion-list dest={{ hadoop_var_prefix }}/exclusion-list backup=yes
