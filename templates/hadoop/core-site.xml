@@ -37,4 +37,10 @@
        <name>hadoop.proxyuser.{{ hadoop_user }}.groups</name>
        <value>*</value>
   </property>
+
+  <property>
+       <name>hadoop.registry.zk.quorum</name>
+       <value>{{ zookeeper_quorum }}</value>
+  </property>
+
 </configuration>
