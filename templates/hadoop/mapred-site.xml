@@ -81,4 +81,9 @@
   <value>{{ jobhistory_host }}:{{ jobhistory_admin_port }}</value>
 </property>
 
+<property>
+  <name>yarn.app.mapreduce.am.hard-kill-timeout-ms</name>
+  <value>600000</value>
+</property>
+
 </configuration>
