@@ -172,4 +172,9 @@
   <value>false</value>
 </property>
 
+<property>
+  <name>yarn.app.mapreduce.am.hard-kill-timeout-ms</name>
+  <value>120000</value>
+</property>
+
 </configuration>
