@@ -102,12 +102,6 @@
   </property>
 {% endif %}
 
-  <!-- Enable durable sync -->
-  <property>
-    <name>dfs.support.append</name>
-    <value>true</value>
-  </property>
-
   <property>
     <name>ha.zookeeper.quorum</name>
     <value>{{ zookeeper_quorum }}</value>
