@@ -7,6 +7,7 @@ hadoop_user_shell: /usr/sbin/nologin
 hadoop_user: hadoop
 hadoop_var_prefix: /var/hadoop
 hdfs_datanode_data_dirs: [ "{{ hadoop_var_prefix }}/dfs/data" ]
+hdfs_namenode_name_dirs: [ "{{ hadoop_var_prefix }}/dfs/name" ]
 journalnode_http_port: 8480
 journalnode_port: 8485
 namenode_rpc_port: 8020

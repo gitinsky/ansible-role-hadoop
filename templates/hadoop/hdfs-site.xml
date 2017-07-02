@@ -62,6 +62,13 @@
   </property>
 
   <property>
+    <name>dfs.namenode.name.dir</name>
+    <value>{% for dir in hdfs_namenode_name_dirs -%}
+	    {{ dir }}{{ ',' if not loop.last else '' }}
+             {%- endfor %}</value>
+  </property>
+
+  <property>
     <name>dfs.client.failover.proxy.provider.{{ hdfs_nameservice_id }}</name>
     <value>org.apache.hadoop.hdfs.server.namenode.ha.ConfiguredFailoverProxyProvider</value>
   </property>
