@@ -4,6 +4,7 @@
 
 - name: install tar
   package: name=tar state=present
+  when: ansible_os_family != 'Elbrus'
 
 - name: unpack Hadoop
   unarchive: copy=no src="/root/hadoop-{{ hadoop_version }}.tar.gz" dest=/opt
