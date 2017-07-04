@@ -55,6 +55,20 @@
   </property>
 
   <property>
+    <name>dfs.datanode.data.dir</name>
+    <value>{% for dir in hdfs_datanode_data_dirs -%}
+	    {{ dir }}{{ ',' if not loop.last else '' }}
+             {%- endfor %}</value>
+  </property>
+
+  <property>
+    <name>dfs.namenode.name.dir</name>
+    <value>{% for dir in hdfs_namenode_name_dirs -%}
+	    {{ dir }}{{ ',' if not loop.last else '' }}
+             {%- endfor %}</value>
+  </property>
+
+  <property>
     <name>dfs.client.failover.proxy.provider.{{ hdfs_nameservice_id }}</name>
     <value>org.apache.hadoop.hdfs.server.namenode.ha.ConfiguredFailoverProxyProvider</value>
   </property>
@@ -101,12 +115,6 @@
     <value>true</value>
   </property>
 {% endif %}
-
-  <!-- Enable durable sync -->
-  <property>
-    <name>dfs.support.append</name>
-    <value>true</value>
-  </property>
 
   <property>
     <name>ha.zookeeper.quorum</name>
