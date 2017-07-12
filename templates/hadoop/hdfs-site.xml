@@ -130,4 +130,30 @@
     <name>dfs.journalnode.http-address</name>
     <value>0.0.0.0:{{ journalnode_http_port }}</value>
   </property>
+
+  <property>
+    <name>nfs.superuser</name>
+    <value>{{ hadoop_user }}</value>
+  </property>
+
+  <property>
+    <name>dfs.namenode.accesstime.precision</name>
+    <value>3600000</value>
+    <!--
+    <description>The access time for HDFS file is precise upto this value.
+      The default value is 1 hour. Setting a value of 0 disables
+      access times for HDFS.
+    </description>
+    -->
+  </property>
+
+  <property>
+    <name>nfs.dump.dir</name>
+    <value>/tmp/.hdfs-nfs</value>
+  </property>
+
+  <property>
+    <name>nfs.exports.allowed.hosts</name>
+    <value>* rw</value>
+  </property>
 </configuration>
