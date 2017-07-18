@@ -86,4 +86,19 @@
   <value>600000</value>
 </property>
 
+<property>
+  <name>mapreduce.map.output.compress.codec</name>
+  <value>com.hadoop.compression.lzo.LzoCodec</value>
+</property>
+
+<property>
+  <name>mapreduce.output.fileoutputformat.compress.codec</name>
+  <value>com.hadoop.compression.lzo.LzoCodec</value>
+</property>
+
+<property>
+  <name>mapreduce.map.output.compress</name>
+  <value>true</value>
+</property>
+
 </configuration>
