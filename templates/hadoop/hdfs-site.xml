@@ -55,6 +55,20 @@
   </property>
 
   <property>
+    <name>dfs.datanode.data.dir</name>
+    <value>{% for dir in hdfs_datanode_data_dirs -%}
+	    {{ dir }}{{ ',' if not loop.last else '' }}
+             {%- endfor %}</value>
+  </property>
+
+  <property>
+    <name>dfs.namenode.name.dir</name>
+    <value>{% for dir in hdfs_namenode_name_dirs -%}
+	    {{ dir }}{{ ',' if not loop.last else '' }}
+             {%- endfor %}</value>
+  </property>
+
+  <property>
     <name>dfs.client.failover.proxy.provider.{{ hdfs_nameservice_id }}</name>
     <value>org.apache.hadoop.hdfs.server.namenode.ha.ConfiguredFailoverProxyProvider</value>
   </property>
@@ -102,12 +116,6 @@
   </property>
 {% endif %}
 
-  <!-- Enable durable sync -->
-  <property>
-    <name>dfs.support.append</name>
-    <value>true</value>
-  </property>
-
   <property>
     <name>ha.zookeeper.quorum</name>
     <value>{{ zookeeper_quorum }}</value>
@@ -121,5 +129,31 @@
   <property>
     <name>dfs.journalnode.http-address</name>
     <value>0.0.0.0:{{ journalnode_http_port }}</value>
+  </property>
+
+  <property>
+    <name>nfs.superuser</name>
+    <value>{{ hadoop_user }}</value>
+  </property>
+
+  <property>
+    <name>dfs.namenode.accesstime.precision</name>
+    <value>3600000</value>
+    <!--
+    <description>The access time for HDFS file is precise upto this value.
+      The default value is 1 hour. Setting a value of 0 disables
+      access times for HDFS.
+    </description>
+    -->
+  </property>
+
+  <property>
+    <name>nfs.dump.dir</name>
+    <value>/tmp/.hdfs-nfs</value>
+  </property>
+
+  <property>
+    <name>nfs.exports.allowed.hosts</name>
+    <value>* rw</value>
   </property>
 </configuration>
