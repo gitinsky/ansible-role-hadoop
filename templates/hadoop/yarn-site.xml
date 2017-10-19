@@ -172,4 +172,14 @@
   <value>false</value>
 </property>
 
+<property>
+  <name>yarn.nodemanager.process-kill-wait.ms</name>
+  <value>20000</value>
+</property>
+
+<property>
+  <name>yarn.nodemanager.delete.debug-delay-sec</name>
+  <value>36000</value>
+</property>
+
 </configuration>
