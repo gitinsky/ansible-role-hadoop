@@ -7,10 +7,10 @@
   when: ansible_os_family != 'Elbrus'
 
 - name: unpack Hadoop
-  unarchive: copy=no src="/root/hadoop-{{ hadoop_version }}.tar.gz" dest=/opt
+  unarchive: copy=no src="/root/hadoop-{{ hadoop_version }}.tar.gz" dest={{ hadoop_unarchive_prefix }}
 
 - name: create {{ hadoop_distr_prefix }}
-  shell: cp -r /opt/hadoop-{{ hadoop_version }} {{ hadoop_distr_prefix }} creates={{ hadoop_distr_prefix }}
+  shell: cp -r {{ hadoop_unarchive_prefix }}/hadoop-{{ hadoop_version }} {{ hadoop_distr_prefix }} creates={{ hadoop_distr_prefix }}
 
 - name: add Hadoop user
   user: name={{ hadoop_user }} shell={{ hadoop_user_shell }} state=present
