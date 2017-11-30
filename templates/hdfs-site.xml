@@ -156,4 +156,9 @@
     <name>nfs.exports.allowed.hosts</name>
     <value>* rw</value>
   </property>
+
+  <property>
+    <name>dfs.namenode.datanode.registration.ip-hostname-check</name>
+    <value>false</value>
+  </property>
 </configuration>
