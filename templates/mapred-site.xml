@@ -101,4 +101,11 @@
   <value>true</value>
 </property>
 
+{% if not timeline_service_enabled %}
+<property>
+  <name>hadoop.yarn.timeline-service.enabled</name>
+  <value>false</value>
+</property>
+{% endif %}
+
 </configuration>

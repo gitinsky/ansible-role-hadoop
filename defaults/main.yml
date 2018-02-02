@@ -1,4 +1,5 @@
 ---
+timeline_service_enabled: false
 hadoop_java_home: /usr/lib/jvm/java-8-openjdk-amd64
 hadoop_heapsize: 2000
 hadoop_version: 3.0.0

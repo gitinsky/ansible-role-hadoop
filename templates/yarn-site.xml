@@ -138,11 +138,13 @@
   <value>true</value>
 </property>
 
+{% if timeline_service_enabled %}
 <property>
   <description>The hostname of the Timeline service web application.</description>
   <name>yarn.timeline-service.hostname</name>
   <value>{{ yarn_timelineservice_hostname }}</value>
 </property>
+{% endif %}
 
 <property>
   <description>Enables cross-origin support (CORS) for web services where
