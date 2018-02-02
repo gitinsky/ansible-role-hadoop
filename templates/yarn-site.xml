@@ -130,6 +130,7 @@
   <description>...</description>
 </property>
 
+{% if timeline_service_enabled %}
 <property>
   <description>Indicate to clients whether Timeline service is enabled or not.
   If enabled, the TimelineClient library used by end-users will post entities
@@ -138,11 +139,18 @@
   <value>true</value>
 </property>
 
-{% if timeline_service_enabled %}
 <property>
   <description>The hostname of the Timeline service web application.</description>
   <name>yarn.timeline-service.hostname</name>
   <value>{{ yarn_timelineservice_hostname }}</value>
+</property>
+{% else %}
+<property>
+  <description>Indicate to clients whether Timeline service is enabled or not.
+  If enabled, the TimelineClient library used by end-users will post entities
+  and events to the Timeline server.</description>
+  <name>yarn.timeline-service.enabled</name>
+  <value>false</value>
 </property>
 {% endif %}
 
