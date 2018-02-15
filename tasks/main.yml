@@ -10,7 +10,7 @@
   unarchive: copy=no src="/root/hadoop-{{ hadoop_version }}.tar.gz" dest={{ hadoop_unarchive_prefix }}
 
 - name: create {{ hadoop_distr_prefix }}
-  shell: cp -r {{ hadoop_unarchive_prefix }}/hadoop-{{ hadoop_version }} {{ hadoop_distr_prefix }} creates={{ hadoop_distr_prefix }}
+  shell: rsync -av --exclude=conf/ {{ hadoop_unarchive_prefix }}/hadoop-{{ hadoop_version }}/ {{ hadoop_distr_prefix }}-{{ env_name }}-{{ hadoop_version }}/ creates={{ hadoop_distr_prefix }}-{{ env_name }}-{{ hadoop_version }}
 
 - name: add Hadoop user
   user: name={{ hadoop_user }} shell={{ hadoop_user_shell }} state=present
@@ -22,41 +22,68 @@
   template: src=exclusion-list dest={{ hadoop_var_prefix }}/exclusion-list backup=yes
   notify: refresh nodes
 
-- name: make {{ hadoop_distr_prefix }}/conf
-  file: path={{ hadoop_distr_prefix }}/conf state=directory owner=root group=root mode=0755
+- name: make {{ hadoop_distr_prefix }}-{{ env_name }}-{{ hadoop_version }}/conf
+  file: path={{ hadoop_distr_prefix }}-{{ env_name }}-{{ hadoop_version }}/conf state=directory owner=root group=root mode=0755
 
-- name: put {{ hadoop_distr_prefix }}/conf/core-site.xml
-  template: src=core-site.xml dest={{ hadoop_distr_prefix }}/conf/core-site.xml owner=root group=root mode=0644 backup=yes
+- name: make /etc/hadoop-{{ env_name }}
+  file: path=/etc/hadoop-{{ env_name }} state=directory owner=root group=root mode=0755
 
-- name: put {{ hadoop_distr_prefix }}/conf/hdfs-site.xml
-  template: src=hdfs-site.xml dest={{ hadoop_distr_prefix }}/conf/hdfs-site.xml owner=root group=root mode=0644 backup=yes
+- name: put /etc/hadoop-{{ env_name }}/core-site.xml
+  template: src=core-site.xml dest=/etc/hadoop-{{ env_name }}/core-site.xml owner=root group=root mode=0644 backup=yes
 
-- name: put {{ hadoop_distr_prefix }}/conf/hadoop-env.sh
-  template: src=hadoop-env.sh dest={{ hadoop_distr_prefix }}/conf/hadoop-env.sh owner=root group=root mode=0644 backup=yes
+- name: put {{ hadoop_distr_prefix }}-{{ env_name }}-{{ hadoop_version }}/conf/core-site.xml
+  file: state=link src=/etc/hadoop-{{ env_name }}/core-site.xml dest={{ hadoop_distr_prefix }}-{{ env_name }}-{{ hadoop_version }}/conf/core-site.xml
 
-- name: put {{ hadoop_distr_prefix }}/conf/hadoop-metrics.properties
-  template: src=hadoop-metrics.properties dest={{ hadoop_distr_prefix }}/conf/hadoop-metrics.properties owner=root group=root mode=0644 backup=yes
+- name: put /etc/hadoop-{{ env_name }}/hdfs-site.xml
+  template: src=hdfs-site.xml dest=/etc/hadoop-{{ env_name }}/hdfs-site.xml owner=root group=root mode=0644 backup=yes
 
-- name: put {{ hadoop_distr_prefix }}/conf/yarn-env.sh
-  template: src=yarn-env.sh dest={{ hadoop_distr_prefix }}/conf/yarn-env.sh owner=root group=root mode=0644 backup=yes
+- name: put {{ hadoop_distr_prefix }}-{{ env_name }}-{{ hadoop_version }}/conf/hdfs-site.xml
+  file: state=link src=/etc/hadoop-{{ env_name }}/hdfs-site.xml dest={{ hadoop_distr_prefix }}-{{ env_name }}-{{ hadoop_version }}/conf/hdfs-site.xml
+
+- name: put /etc/hadoop-{{ env_name }}/hadoop-env.sh
+  template: src=hadoop-env.sh dest=/etc/hadoop-{{ env_name }}/hadoop-env.sh owner=root group=root mode=0644 backup=yes
+
+- name: put {{ hadoop_distr_prefix }}-{{ env_name }}-{{ hadoop_version }}/conf/hadoop-env.sh
+  file: state=link src=/etc/hadoop-{{ env_name }}/hadoop-env.sh dest={{ hadoop_distr_prefix }}-{{ env_name }}-{{ hadoop_version }}/conf/hadoop-env.sh
+
+- name: put /etc/hadoop-{{ env_name }}/hadoop-metrics.properties
+  template: src=hadoop-metrics.properties dest=/etc/hadoop-{{ env_name }}/hadoop-metrics.properties owner=root group=root mode=0644 backup=yes
+
+- name: put {{ hadoop_distr_prefix }}-{{ env_name }}-{{ hadoop_version }}/conf/hadoop-metrics.properties
+  file: state=link src=/etc/hadoop-{{ env_name }}/hadoop-metrics.properties dest={{ hadoop_distr_prefix }}-{{ env_name }}-{{ hadoop_version }}/conf/hadoop-metrics.properties
+
+- name: put /etc/hadoop-{{ env_name }}/yarn-env.sh
+  template: src=yarn-env.sh dest=/etc/hadoop-{{ env_name }}/yarn-env.sh owner=root group=root mode=0644 backup=yes
   when: (disable_yarn|default(False) == False)
 
-- name: put {{ hadoop_distr_prefix }}/conf/yarn-site.xml
-  template: src=yarn-site.xml dest={{ hadoop_distr_prefix }}/conf/yarn-site.xml owner=root group=root mode=0644 backup=yes
+- name: put {{ hadoop_distr_prefix }}-{{ env_name }}-{{ hadoop_version }}/conf/yarn-env.sh
+  file: state=link src=/etc/hadoop-{{ env_name }}/yarn-env.sh dest={{ hadoop_distr_prefix }}-{{ env_name }}-{{ hadoop_version }}/conf/yarn-env.sh
   when: (disable_yarn|default(False) == False)
 
-- name: put {{ hadoop_distr_prefix }}/conf/mapred-site.xml
-  template: src=mapred-site.xml dest={{ hadoop_distr_prefix }}/conf/mapred-site.xml owner=root group=root mode=0644 backup=yes
+- name: put /etc/hadoop-{{ env_name }}/yarn-site.xml
+  template: src=yarn-site.xml dest=/etc/hadoop-{{ env_name }}/yarn-site.xml owner=root group=root mode=0644 backup=yes
   when: (disable_yarn|default(False) == False)
 
-- name: create {{ hadoop_distr_prefix }}/lib/native/Linux-amd64-64
-  file: state=directory path={{ hadoop_distr_prefix }}/lib/native/Linux-amd64-64
+- name: put {{ hadoop_distr_prefix }}-{{ env_name }}-{{ hadoop_version }}/conf/yarn-site.xml
+  file: state=link src=/etc/hadoop-{{ env_name }}/yarn-site.xml dest={{ hadoop_distr_prefix }}-{{ env_name }}-{{ hadoop_version }}/conf/yarn-site.xml
+  when: (disable_yarn|default(False) == False)
 
-- name: make {{ hadoop_distr_prefix }}/logs
-  file: path={{ hadoop_distr_prefix }}/logs state=directory owner={{ hadoop_user }} group={{ hadoop_user }} mode=0755
+- name: put /etc/hadoop-{{ env_name }}/mapred-site.xml
+  template: src=mapred-site.xml dest=/etc/hadoop-{{ env_name }}/mapred-site.xml owner=root group=root mode=0644 backup=yes
+  when: (disable_yarn|default(False) == False)
+
+- name: put {{ hadoop_distr_prefix }}-{{ env_name }}-{{ hadoop_version }}/conf/mapred-site.xml
+  file: state=link src=/etc/hadoop-{{ env_name }}/mapred-site.xml dest={{ hadoop_distr_prefix }}-{{ env_name }}-{{ hadoop_version }}/conf/mapred-site.xml
+  when: (disable_yarn|default(False) == False)
+
+- name: create {{ hadoop_distr_prefix }}-{{ env_name }}-{{ hadoop_version }}/lib/native/Linux-amd64-64
+  file: state=directory path={{ hadoop_distr_prefix }}-{{ env_name }}-{{ hadoop_version }}/lib/native/Linux-amd64-64
+
+- name: make {{ hadoop_distr_prefix }}-{{ env_name }}-{{ hadoop_version }}/logs
+  file: path={{ hadoop_distr_prefix }}-{{ env_name }}-{{ hadoop_version }}/logs state=directory owner={{ hadoop_user }} group={{ hadoop_user }} mode=0755
 
 - name: make a link to libhadoop.so
-  file: state=link src={{ hadoop_distr_prefix }}/lib/native/libhadoop.so dest={{ hadoop_distr_prefix }}/lib/native/Linux-amd64-64/libhadoop.so
+  file: state=link src={{ hadoop_distr_prefix }}-{{ env_name }}-{{ hadoop_version }}/lib/native/libhadoop.so dest={{ hadoop_distr_prefix }}-{{ env_name }}-{{ hadoop_version }}/lib/native/Linux-amd64-64/libhadoop.so
 
 - name: make a link to libhdfs.so
-  file: state=link src={{ hadoop_distr_prefix }}/lib/native/libhdfs.so dest={{ hadoop_distr_prefix }}/lib/native/Linux-amd64-64/libhdfs.so
+  file: state=link src={{ hadoop_distr_prefix }}-{{ env_name }}-{{ hadoop_version }}/lib/native/libhdfs.so dest={{ hadoop_distr_prefix }}-{{ env_name }}-{{ hadoop_version }}/lib/native/Linux-amd64-64/libhdfs.so
