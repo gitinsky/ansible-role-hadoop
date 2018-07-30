@@ -120,7 +120,7 @@
 
 <property>
   <name>mapreduce.map.java.opts</name>
-  <value>-Xmx3000m</value>
+  <value>-Xmx6000m</value>
   <description>...</description>
 </property>
 
