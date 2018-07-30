@@ -9,6 +9,9 @@
 - name: unpack Hadoop
   unarchive: copy=no src="/root/hadoop-{{ hadoop_version }}.tar.gz" dest={{ hadoop_unarchive_prefix }}
 
+- name: install rsync
+  apt: name=rsync
+
 - name: create {{ hadoop_distr_prefix }}
   shell: rsync -av --exclude=conf/ {{ hadoop_unarchive_prefix }}/hadoop-{{ hadoop_version }}/ {{ hadoop_distr_prefix }}-{{ env_name }}-{{ hadoop_version }}/ creates={{ hadoop_distr_prefix }}-{{ env_name }}-{{ hadoop_version }}
 
