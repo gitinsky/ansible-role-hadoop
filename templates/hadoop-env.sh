@@ -31,6 +31,8 @@ export HADOOP_HEAPSIZE={{ hadoop_heapsize }}
 
 # Command specific options appended to HADOOP_OPTS when specified
 # export HADOOP_NAMENODE_OPTS="-Dhadoop.security.logger=${HADOOP_SECURITY_LOGGER:-INFO,RFAS} -Dhdfs.audit.logger=${HDFS_AUDIT_LOGGER:-INFO,NullAppender} $HADOOP_NAMENODE_OPTS"
+export HADOOP_NAMENODE_OPTS="$HADOOP_NAMENODE_OPTS -javaagent:{{ hadoop_distr_prefix }}-{{ env_name }}-{{ hadoop_version }}/lib/jmx_prometheus_javaagent-0.3.1.jar=9140:{{ hadoop_distr_prefix }}-{{ env_name }}-{{ hadoop_version }}/conf/jmx_prometheus_javaagent.yaml"
+export HADOOP_DATANODE_OPTS="$HADOOP_DATANODE_OPTS -javaagent:{{ hadoop_distr_prefix }}-{{ env_name }}-{{ hadoop_version }}/lib/jmx_prometheus_javaagent-0.3.1.jar=9141:{{ hadoop_distr_prefix }}-{{ env_name }}-{{ hadoop_version }}/conf/jmx_prometheus_javaagent.yaml"
 # export HADOOP_DATANODE_OPTS="-Dhadoop.security.logger=ERROR,RFAS $HADOOP_DATANODE_OPTS"
 
 # export HADOOP_SECONDARYNAMENODE_OPTS="-Dhadoop.security.logger=${HADOOP_SECURITY_LOGGER:-INFO,RFAS} -Dhdfs.audit.logger=${HDFS_AUDIT_LOGGER:-INFO,NullAppender} $HADOOP_SECONDARYNAMENODE_OPTS"

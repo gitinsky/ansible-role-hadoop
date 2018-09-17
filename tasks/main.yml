@@ -58,6 +58,12 @@
 - name: put {{ hadoop_distr_prefix }}-{{ env_name }}-{{ hadoop_version }}/conf/hadoop-metrics.properties
   file: state=link src=/etc/hadoop-{{ env_name }}/hadoop-metrics.properties dest={{ hadoop_distr_prefix }}-{{ env_name }}-{{ hadoop_version }}/conf/hadoop-metrics.properties
 
+- name: put "/etc/hadoop-{{ env_name }}/jmx_prometheus_javaagent.yaml"
+  template: src=jmx_prometheus_javaagent.yaml dest=/etc/hadoop-{{ env_name }}/jmx_prometheus_javaagent.yaml owner=root group=root mode=0644 backup=yes
+
+- name: create {{ hadoop_distr_prefix }}-{{ env_name }}-{{ hadoop_version }}/conf/jmx_prometheus_javaagent.yaml
+  file: state=link src=/etc/hadoop-{{ env_name }}/jmx_prometheus_javaagent.yaml dest={{ hadoop_distr_prefix }}-{{ env_name }}-{{ hadoop_version }}/conf/jmx_prometheus_javaagent.yaml
+
 - name: put /etc/hadoop-{{ env_name }}/yarn-env.sh
   template: src=yarn-env.sh dest=/etc/hadoop-{{ env_name }}/yarn-env.sh owner=root group=root mode=0644 backup=yes
   when: (disable_yarn|default(False) == False)
@@ -93,3 +99,6 @@
 
 - name: make a link to libhdfs.so
   file: state=link src={{ hadoop_distr_prefix }}-{{ env_name }}-{{ hadoop_version }}/lib/native/libhdfs.so dest={{ hadoop_distr_prefix }}-{{ env_name }}-{{ hadoop_version }}/lib/native/Linux-amd64-64/libhdfs.so
+
+- name: download the Prom JMX exporter
+  get_url: url="https://repo1.maven.org/maven2/io/prometheus/jmx/jmx_prometheus_javaagent/0.3.1/jmx_prometheus_javaagent-0.3.1.jar" dest={{ hadoop_distr_prefix }}-{{ env_name }}-{{ hadoop_version }}/lib/jmx_prometheus_javaagent-0.3.1.jar
