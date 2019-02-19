@@ -35,3 +35,4 @@ yarn_nodemanager_vcores: 8
 yarn_scheduler_min_mem: 2500
 yarn_mapreduce_map_mem: 4096
 yarn_mapreduce_reduce_mem: 8192
+disable_yarn: False

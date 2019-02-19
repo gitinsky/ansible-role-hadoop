@@ -1,6 +1,8 @@
 ---
 - name: download Hadoop
-  get_url: url="http://apache-mirror.rbc.ru/pub/apache/hadoop/common/hadoop-{{ hadoop_version }}/hadoop-{{ hadoop_version }}.tar.gz" dest=/root/hadoop-{{ hadoop_version }}.tar.gz
+  get_url:
+    url: "http://apache-mirror.rbc.ru/pub/apache/hadoop/common/hadoop-{{ hadoop_version }}/hadoop-{{ hadoop_version }}.tar.gz"
+    dest: /root/hadoop-{{ hadoop_version }}.tar.gz
 
 - name: install tar
   package: name=tar state=present
@@ -13,7 +15,7 @@
   apt: name=rsync
 
 - name: create {{ hadoop_distr_prefix }}
-  shell: rsync -av --exclude=conf/ {{ hadoop_unarchive_prefix }}/hadoop-{{ hadoop_version }}/ {{ hadoop_distr_prefix }}-{{ env_name }}-{{ hadoop_version }}/ creates={{ hadoop_distr_prefix }}-{{ env_name }}-{{ hadoop_version }}
+  command: rsync -av --exclude=conf/ {{ hadoop_unarchive_prefix }}/hadoop-{{ hadoop_version }}/ {{ hadoop_distr_prefix }}-{{ env_name }}-{{ hadoop_version }}/ creates={{ hadoop_distr_prefix }}-{{ env_name }}-{{ hadoop_version }}
 
 - name: create a -current link
   file: state=link src={{ hadoop_distr_prefix }}-{{ env_name }}-{{ hadoop_version }} dest={{ hadoop_distr_prefix }}-{{ env_name }}-current
@@ -56,37 +58,43 @@
   template: src=hadoop-metrics.properties dest=/etc/hadoop-{{ env_name }}/hadoop-metrics.properties owner=root group=root mode=0644 backup=yes
 
 - name: put {{ hadoop_distr_prefix }}-{{ env_name }}-{{ hadoop_version }}/conf/hadoop-metrics.properties
-  file: state=link src=/etc/hadoop-{{ env_name }}/hadoop-metrics.properties dest={{ hadoop_distr_prefix }}-{{ env_name }}-{{ hadoop_version }}/conf/hadoop-metrics.properties
+  file:
+    state: link
+    src: "/etc/hadoop-{{ env_name }}/hadoop-metrics.properties"
+    dest: "{{ hadoop_distr_prefix }}-{{ env_name }}-{{ hadoop_version }}/conf/hadoop-metrics.properties"
 
 - name: put "/etc/hadoop-{{ env_name }}/jmx_prometheus_javaagent.yaml"
   template: src=jmx_prometheus_javaagent.yaml dest=/etc/hadoop-{{ env_name }}/jmx_prometheus_javaagent.yaml owner=root group=root mode=0644 backup=yes
 
 - name: create {{ hadoop_distr_prefix }}-{{ env_name }}-{{ hadoop_version }}/conf/jmx_prometheus_javaagent.yaml
-  file: state=link src=/etc/hadoop-{{ env_name }}/jmx_prometheus_javaagent.yaml dest={{ hadoop_distr_prefix }}-{{ env_name }}-{{ hadoop_version }}/conf/jmx_prometheus_javaagent.yaml
+  file:
+    state: link
+    src: "/etc/hadoop-{{ env_name }}/jmx_prometheus_javaagent.yaml"
+    dest: "{{ hadoop_distr_prefix }}-{{ env_name }}-{{ hadoop_version }}/conf/jmx_prometheus_javaagent.yaml"
 
 - name: put /etc/hadoop-{{ env_name }}/yarn-env.sh
   template: src=yarn-env.sh dest=/etc/hadoop-{{ env_name }}/yarn-env.sh owner=root group=root mode=0644 backup=yes
-  when: (disable_yarn|default(False) == False)
+  when: not disable_yarn
 
 - name: put {{ hadoop_distr_prefix }}-{{ env_name }}-{{ hadoop_version }}/conf/yarn-env.sh
   file: state=link src=/etc/hadoop-{{ env_name }}/yarn-env.sh dest={{ hadoop_distr_prefix }}-{{ env_name }}-{{ hadoop_version }}/conf/yarn-env.sh
-  when: (disable_yarn|default(False) == False)
+  when: not disable_yarn
 
 - name: put /etc/hadoop-{{ env_name }}/yarn-site.xml
   template: src=yarn-site.xml dest=/etc/hadoop-{{ env_name }}/yarn-site.xml owner=root group=root mode=0644 backup=yes
-  when: (disable_yarn|default(False) == False)
+  when: not disable_yarn
 
 - name: put {{ hadoop_distr_prefix }}-{{ env_name }}-{{ hadoop_version }}/conf/yarn-site.xml
   file: state=link src=/etc/hadoop-{{ env_name }}/yarn-site.xml dest={{ hadoop_distr_prefix }}-{{ env_name }}-{{ hadoop_version }}/conf/yarn-site.xml
-  when: (disable_yarn|default(False) == False)
+  when: not disable_yarn
 
 - name: put /etc/hadoop-{{ env_name }}/mapred-site.xml
   template: src=mapred-site.xml dest=/etc/hadoop-{{ env_name }}/mapred-site.xml owner=root group=root mode=0644 backup=yes
-  when: (disable_yarn|default(False) == False)
+  when: not disable_yarn
 
 - name: put {{ hadoop_distr_prefix }}-{{ env_name }}-{{ hadoop_version }}/conf/mapred-site.xml
   file: state=link src=/etc/hadoop-{{ env_name }}/mapred-site.xml dest={{ hadoop_distr_prefix }}-{{ env_name }}-{{ hadoop_version }}/conf/mapred-site.xml
-  when: (disable_yarn|default(False) == False)
+  when: not disable_yarn
 
 - name: create {{ hadoop_distr_prefix }}-{{ env_name }}-{{ hadoop_version }}/lib/native/Linux-amd64-64
   file: state=directory path={{ hadoop_distr_prefix }}-{{ env_name }}-{{ hadoop_version }}/lib/native/Linux-amd64-64
@@ -95,10 +103,18 @@
   file: path={{ hadoop_distr_prefix }}-{{ env_name }}-{{ hadoop_version }}/logs state=directory owner={{ hadoop_user }} group={{ hadoop_user }} mode=0755
 
 - name: make a link to libhadoop.so
-  file: state=link src={{ hadoop_distr_prefix }}-{{ env_name }}-{{ hadoop_version }}/lib/native/libhadoop.so dest={{ hadoop_distr_prefix }}-{{ env_name }}-{{ hadoop_version }}/lib/native/Linux-amd64-64/libhadoop.so
+  file:
+    state: link
+    src: "{{ hadoop_distr_prefix }}-{{ env_name }}-{{ hadoop_version }}/lib/native/libhadoop.so"
+    dest: "{{ hadoop_distr_prefix }}-{{ env_name }}-{{ hadoop_version }}/lib/native/Linux-amd64-64/libhadoop.so"
 
 - name: make a link to libhdfs.so
-  file: state=link src={{ hadoop_distr_prefix }}-{{ env_name }}-{{ hadoop_version }}/lib/native/libhdfs.so dest={{ hadoop_distr_prefix }}-{{ env_name }}-{{ hadoop_version }}/lib/native/Linux-amd64-64/libhdfs.so
+  file:
+    state: link
+    src: "{{ hadoop_distr_prefix }}-{{ env_name }}-{{ hadoop_version }}/lib/native/libhdfs.so"
+    dest: "{{ hadoop_distr_prefix }}-{{ env_name }}-{{ hadoop_version }}/lib/native/Linux-amd64-64/libhdfs.so"
 
 - name: download the Prom JMX exporter
-  get_url: url="https://repo1.maven.org/maven2/io/prometheus/jmx/jmx_prometheus_javaagent/0.3.1/jmx_prometheus_javaagent-0.3.1.jar" dest={{ hadoop_distr_prefix }}-{{ env_name }}-{{ hadoop_version }}/lib/jmx_prometheus_javaagent-0.3.1.jar
+  get_url:
+    url: "https://repo1.maven.org/maven2/io/prometheus/jmx/jmx_prometheus_javaagent/0.3.1/jmx_prometheus_javaagent-0.3.1.jar"
+    dest: "{{ hadoop_distr_prefix }}-{{ env_name }}-{{ hadoop_version }}/lib/jmx_prometheus_javaagent-0.3.1.jar"
