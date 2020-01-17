@@ -4,6 +4,7 @@
     url: "http://apache-mirror.rbc.ru/pub/apache/hadoop/common/hadoop-{{ hadoop_version }}/hadoop-{{ hadoop_version }}.tar.gz"
     dest: /root/hadoop-{{ hadoop_version }}.tar.gz
     force: no
+    checksum: "{{ hadoop_checksum_algo }}:{{ hadoop_checksum }}"
 
 - name: install tar
   package: name=tar state=present
