@@ -3,6 +3,7 @@
   get_url:
     url: "http://apache-mirror.rbc.ru/pub/apache/hadoop/common/hadoop-{{ hadoop_version }}/hadoop-{{ hadoop_version }}.tar.gz"
     dest: /root/hadoop-{{ hadoop_version }}.tar.gz
+    force: no
 
 - name: install tar
   package: name=tar state=present
