@@ -12,6 +12,7 @@
 
 - name: unpack Hadoop
   unarchive: copy=no src="/root/hadoop-{{ hadoop_version }}.tar.gz" dest={{ hadoop_unarchive_prefix }}
+  when: not ansible_check_mode
 
 - name: install rsync
   apt: name=rsync
@@ -21,6 +22,7 @@
 
 - name: create a -current link
   file: state=link src={{ hadoop_distr_prefix }}-{{ env_name }}-{{ hadoop_version }} dest={{ hadoop_distr_prefix }}-{{ env_name }}-current
+  when: not ansible_check_mode
 
 - name: add Hadoop user
   user: name={{ hadoop_user }} shell={{ hadoop_user_shell }} state=present
@@ -43,6 +45,7 @@
 
 - name: put {{ hadoop_distr_prefix }}-{{ env_name }}-{{ hadoop_version }}/conf/core-site.xml
   file: state=link src=/etc/hadoop-{{ env_name }}/core-site.xml dest={{ hadoop_distr_prefix }}-{{ env_name }}-{{ hadoop_version }}/conf/core-site.xml
+  when: not ansible_check_mode
 
 - name: put /etc/hadoop-{{ env_name }}/hdfs-site.xml
   template: src=hdfs-site.xml dest=/etc/hadoop-{{ env_name }}/hdfs-site.xml owner=root group=root mode=0644 backup=yes
