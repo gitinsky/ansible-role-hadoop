@@ -129,3 +129,4 @@
   get_url:
     url: "https://repo1.maven.org/maven2/io/prometheus/jmx/jmx_prometheus_javaagent/0.3.1/jmx_prometheus_javaagent-0.3.1.jar"
     dest: "{{ hadoop_distr_prefix }}-{{ env_name }}-{{ hadoop_version }}/lib/jmx_prometheus_javaagent-0.3.1.jar"
+  when: not ansible_check_mode
