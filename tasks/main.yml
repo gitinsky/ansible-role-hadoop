@@ -52,12 +52,14 @@
 
 - name: put {{ hadoop_distr_prefix }}-{{ env_name }}-{{ hadoop_version }}/conf/hdfs-site.xml
   file: state=link src=/etc/hadoop-{{ env_name }}/hdfs-site.xml dest={{ hadoop_distr_prefix }}-{{ env_name }}-{{ hadoop_version }}/conf/hdfs-site.xml
+  when: not ansible_check_mode
 
 - name: put /etc/hadoop-{{ env_name }}/hadoop-env.sh
   template: src=hadoop-env.sh dest=/etc/hadoop-{{ env_name }}/hadoop-env.sh owner=root group=root mode=0644 backup=yes
 
 - name: put {{ hadoop_distr_prefix }}-{{ env_name }}-{{ hadoop_version }}/conf/hadoop-env.sh
   file: state=link src=/etc/hadoop-{{ env_name }}/hadoop-env.sh dest={{ hadoop_distr_prefix }}-{{ env_name }}-{{ hadoop_version }}/conf/hadoop-env.sh
+  when: not ansible_check_mode
 
 - name: put /etc/hadoop-{{ env_name }}/hadoop-metrics.properties
   template: src=hadoop-metrics.properties dest=/etc/hadoop-{{ env_name }}/hadoop-metrics.properties owner=root group=root mode=0644 backup=yes
@@ -67,6 +69,7 @@
     state: link
     src: "/etc/hadoop-{{ env_name }}/hadoop-metrics.properties"
     dest: "{{ hadoop_distr_prefix }}-{{ env_name }}-{{ hadoop_version }}/conf/hadoop-metrics.properties"
+  when: not ansible_check_mode
 
 - name: put "/etc/hadoop-{{ env_name }}/jmx_prometheus_javaagent.yaml"
   template: src=jmx_prometheus_javaagent.yaml dest=/etc/hadoop-{{ env_name }}/jmx_prometheus_javaagent.yaml owner=root group=root mode=0644 backup=yes
@@ -76,6 +79,7 @@
     state: link
     src: "/etc/hadoop-{{ env_name }}/jmx_prometheus_javaagent.yaml"
     dest: "{{ hadoop_distr_prefix }}-{{ env_name }}-{{ hadoop_version }}/conf/jmx_prometheus_javaagent.yaml"
+  when: not ansible_check_mode
 
 - name: put /etc/hadoop-{{ env_name }}/yarn-env.sh
   template: src=yarn-env.sh dest=/etc/hadoop-{{ env_name }}/yarn-env.sh owner=root group=root mode=0644 backup=yes
@@ -112,12 +116,14 @@
     state: link
     src: "{{ hadoop_distr_prefix }}-{{ env_name }}-{{ hadoop_version }}/lib/native/libhadoop.so"
     dest: "{{ hadoop_distr_prefix }}-{{ env_name }}-{{ hadoop_version }}/lib/native/Linux-amd64-64/libhadoop.so"
+  when: not ansible_check_mode
 
 - name: make a link to libhdfs.so
   file:
     state: link
     src: "{{ hadoop_distr_prefix }}-{{ env_name }}-{{ hadoop_version }}/lib/native/libhdfs.so"
     dest: "{{ hadoop_distr_prefix }}-{{ env_name }}-{{ hadoop_version }}/lib/native/Linux-amd64-64/libhdfs.so"
+  when: not ansible_check_mode
 
 - name: download the Prom JMX exporter
   get_url:
