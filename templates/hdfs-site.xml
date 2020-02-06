@@ -161,4 +161,9 @@
     <name>dfs.namenode.datanode.registration.ip-hostname-check</name>
     <value>false</value>
   </property>
+
+  <property>
+    <name>dfs.blocksize</name>
+    <value>{{ dfs_blocksize }}</value>
+  </property>
 </configuration>
