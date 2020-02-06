@@ -39,3 +39,4 @@ yarn_mapreduce_map_mem: 4096
 yarn_mapreduce_reduce_mem: 8192
 disable_yarn: False
 dfs_blocksize: 134217728
+dfs_replication: 3

@@ -166,4 +166,9 @@
     <name>dfs.blocksize</name>
     <value>{{ dfs_blocksize }}</value>
   </property>
+
+  <property>
+    <name>dfs.replication</name>
+    <value>{{ dfs_replication }}</value>
+  </property>
 </configuration>
