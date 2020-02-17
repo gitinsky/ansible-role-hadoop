@@ -40,3 +40,4 @@ yarn_mapreduce_reduce_mem: 8192
 disable_yarn: False
 dfs_blocksize: 134217728
 dfs_replication: 3
+dfs_datanode_balance_max_concurrent_moves: 50

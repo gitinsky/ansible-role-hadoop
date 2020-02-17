@@ -171,4 +171,9 @@
     <name>dfs.replication</name>
     <value>{{ dfs_replication }}</value>
   </property>
+
+  <property>
+    <name>dfs.datanode.balance.max.concurrent.moves</name>
+    <value>{{ dfs_datanode_balance_max_concurrent_moves }}</value>
+  </property>
 </configuration>
