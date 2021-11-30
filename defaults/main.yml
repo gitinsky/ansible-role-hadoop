@@ -2,7 +2,7 @@
 timeline_service_enabled: false
 hadoop_java_home: /usr/lib/jvm/java-8-openjdk-amd64
 hadoop_heapsize: 2000
-hadoop_version: 3.2.1
+hadoop_version: 3.3.1
 hadoop_checksum_algo: sha512
 hadoop_checksum: d62709c3d7144fcaafc60e18d0fa03d7d477cc813e45526f3646030cd87dbf010aeccf3f4ce795b57b08d2884b3a55f91fe9d74ac144992d2dfe444a4bbf34ee
 hadoop_distr_prefix: /opt/hadoop
