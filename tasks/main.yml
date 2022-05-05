@@ -109,7 +109,7 @@
   file: state=directory path={{ hadoop_distr_prefix }}-{{ env_name }}-{{ hadoop_version }}/lib/native/Linux-amd64-64
 
 - name: make {{ hadoop_distr_prefix }}-{{ env_name }}-{{ hadoop_version }}/logs
-  file: path={{ hadoop_distr_prefix }}-{{ env_name }}-{{ hadoop_version }}/logs state=directory owner={{ hadoop_user }} group={{ hadoop_user }} mode=0755
+  file: path={{ hadoop_distr_prefix }}-{{ env_name }}-{{ hadoop_version }}/logs state=directory owner={{ hadoop_user }} group={{ hadoop_user }} mode=0775
 
 - name: make a link to libhadoop.so
   file:
